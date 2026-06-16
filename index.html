@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ремонт квартир в Москве — под ключ от 4 500 ₽/м²</title>
+    <style>
+        :root {
+            --primary: #059669;
+            --primary-dark: #047857;
+            --accent: #14b8a6;
+            --text: #1f2937;
+            --text-light: #6b7280;
+            --bg: #ffffff;
+            --bg-alt: #f0fdf4;
+            --dark: #064e3b;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            color: var(--text); line-height: 1.6; background: var(--bg);
+        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+        header {
+            background: rgba(255,255,255,0.95); backdrop-filter: blur(10px);
+            position: fixed; width: 100%; top: 0; z-index: 100;
+            border-bottom: 1px solid #d1fae5;
+        }
+        nav { display: flex; justify-content: space-between; align-items: center; height: 72px; }
+        .logo { font-weight: 800; font-size: 1.25rem; color: var(--dark); display: flex; align-items: center; gap: 8px; }
+        .logo-icon { width: 36px; height: 36px; background: linear-gradient(135deg, var(--primary), var(--accent)); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.25rem; }
+        .nav-links { display: flex; gap: 32px; list-style: none; }
+        .nav-links a { text-decoration: none; color: var(--text); font-weight: 500; font-size: 0.95rem; transition: color 0.2s; }
+        .nav-links a:hover { color: var(--primary); }
+        .btn {
+            display: inline-block; padding: 14px 32px; border-radius: 10px;
+            font-weight: 700; font-size: 1rem; text-decoration: none; transition: all 0.2s;
+            border: none; cursor: pointer;
+        }
+        .btn-primary { background: var(--primary); color: white; box-shadow: 0 4px 14px rgba(5,150,105,0.3); }
+        .btn-primary:hover { background: var(--primary-dark); transform: translateY(-1px); }
+        .btn-outline { background: transparent; color: var(--primary); border: 2px solid var(--primary); }
+        .btn-outline:hover { background: var(--primary); color: white; }
+        .btn-light { background: white; color: var(--primary); }
+        .btn-light:hover { background: var(--bg-alt); }
+
+        .hero {
+            padding: 160px 0 100px;
+            background: linear-gradient(135deg, #064e3b 0%, #065f46 40%, #059669 100%);
+            color: white; position: relative; overflow: hidden;
+        }
+        .hero::before {
+            content: ''; position: absolute; bottom: -20%; left: -10%; width: 700px; height: 700px;
+            background: radial-gradient(circle, rgba(20,184,166,0.15) 0%, transparent 70%);
+        }
+        .hero-content { position: relative; z-index: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+        .hero h1 { font-size: 3.25rem; font-weight: 800; line-height: 1.1; margin-bottom: 24px; letter-spacing: -1px; }
+        .hero h1 span { color: #6ee7b7; }
+        .hero p { font-size: 1.2rem; color: rgba(255,255,255,0.85); margin-bottom: 32px; }
+        .hero-price { display: inline-block; background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); padding: 12px 24px; border-radius: 12px; margin-bottom: 32px; font-size: 1.1rem; }
+        .hero-price strong { color: #6ee7b7; font-size: 1.5rem; }
+        .hero-badges { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 32px; }
+        .badge { background: rgba(255,255,255,0.1); padding: 8px 16px; border-radius: 8px; font-size: 0.85rem; }
+        .hero-visual {
+            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 24px; padding: 32px;
+        }
+        .progress-item { margin-bottom: 20px; }
+        .progress-label { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.9rem; }
+        .progress-bar { height: 8px; background: rgba(255,255,255,0.1); border-radius: 4px; overflow: hidden; }
+        .progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent), #6ee7b7); border-radius: 4px; }
+
+        section { padding: 100px 0; }
+        .section-header { text-align: center; max-width: 640px; margin: 0 auto 60px; }
+        .section-header h2 { font-size: 2.5rem; font-weight: 800; margin-bottom: 16px; color: var(--dark); }
+        .section-header p { font-size: 1.125rem; color: var(--text-light); }
+
+        .types-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+        .type-card {
+            border-radius: 20px; padding: 40px 32px; position: relative; overflow: hidden;
+            transition: all 0.3s; border: 1px solid #e5e7eb;
+        }
+        .type-card:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(0,0,0,0.08); }
+        .type-card h3 { font-size: 1.35rem; font-weight: 800; margin-bottom: 12px; }
+        .type-card .price { font-size: 2rem; font-weight: 800; color: var(--primary); margin-bottom: 16px; }
+        .type-card .price span { font-size: 0.9rem; color: var(--text-light); font-weight: 400; }
+        .type-card ul { list-style: none; }
+        .type-card ul li { padding: 8px 0; color: var(--text-light); font-size: 0.95rem; display: flex; align-items: flex-start; gap: 8px; }
+        .type-card ul li::before { content: '✓'; color: var(--primary); font-weight: 800; }
+
+        .process { background: var(--bg-alt); }
+        .steps { display: flex; justify-content: space-between; position: relative; }
+        .steps::before {
+            content: ''; position: absolute; top: 24px; left: 10%; right: 10%; height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--accent)); z-index: 0;
+        }
+        .step { text-align: center; position: relative; z-index: 1; flex: 1; }
+        .step-num { width: 50px; height: 50px; border-radius: 50%; background: white; border: 2px solid var(--primary); color: var(--primary); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.25rem; margin: 0 auto 16px; }
+        .step h4 { font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
+        .step p { font-size: 0.85rem; color: var(--text-light); padding: 0 16px; }
+
+        .calculator {
+            background: var(--dark); color: white; border-radius: 24px; padding: 60px;
+            display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;
+        }
+        .calc-form h3 { font-size: 2rem; font-weight: 800; margin-bottom: 8px; }
+        .calc-form p { color: rgba(255,255,255,0.7); margin-bottom: 32px; }
+        .calc-field { margin-bottom: 20px; }
+        .calc-field label { display: block; margin-bottom: 8px; font-weight: 600; }
+        .calc-field input, .calc-field select {
+            width: 100%; padding: 14px; border-radius: 10px; border: none; font-size: 1rem;
+        }
+        .calc-result {
+            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px; padding: 40px; text-align: center;
+        }
+        .calc-result .result-label { font-size: 1rem; color: rgba(255,255,255,0.6); margin-bottom: 12px; }
+        .calc-result .result-value { font-size: 3rem; font-weight: 800; color: #6ee7b7; }
+        .calc-result .result-note { font-size: 0.9rem; color: rgba(255,255,255,0.5); margin-top: 16px; }
+
+        .contact-section { background: var(--bg); }
+        .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+        .contact-form-box {
+            background: var(--bg); border: 2px solid #d1fae5; border-radius: 20px; padding: 40px;
+            box-shadow: 0 10px 40px rgba(5,150,105,0.08);
+        }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 0.9rem; }
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%; padding: 14px 16px; border: 2px solid #e5e7eb; border-radius: 10px;
+            font-size: 1rem; transition: border-color 0.2s; font-family: inherit;
+        }
+        .form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--primary); }
+        .form-group textarea { min-height: 120px; resize: vertical; }
+        .contact-info h3 { font-size: 2.5rem; font-weight: 800; margin-bottom: 20px; color: var(--dark); }
+        .contact-info > p { color: var(--text-light); margin-bottom: 32px; font-size: 1.1rem; }
+        .contact-item { display: flex; align-items: center; gap: 16px; margin-bottom: 24px; padding: 20px; background: var(--bg-alt); border-radius: 12px; }
+        .contact-item-icon { width: 48px; height: 48px; border-radius: 12px; background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; font-size: 1.25rem; flex-shrink: 0; }
+
+        footer { background: var(--dark); color: white; padding: 50px 0 30px; }
+        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
+        .footer-brand p { color: rgba(255,255,255,0.5); margin-top: 12px; font-size: 0.9rem; }
+        .footer-links h4 { font-size: 1rem; font-weight: 700; margin-bottom: 16px; }
+        .footer-links ul { list-style: none; }
+        .footer-links a { color: rgba(255,255,255,0.5); text-decoration: none; display: block; padding: 6px 0; font-size: 0.9rem; }
+        .footer-links a:hover { color: white; }
+        .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 24px; text-align: center; color: rgba(255,255,255,0.3); font-size: 0.8rem; }
+
+        @media (max-width: 768px) {
+            .hero-content, .calculator, .contact-grid { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 2.25rem; }
+            .hero { padding: 120px 0 60px; }
+            .nav-links { display: none; }
+            .steps { flex-direction: column; gap: 40px; }
+            .steps::before { display: none; }
+            .step { display: flex; align-items: center; text-align: left; gap: 20px; }
+            .step-num { margin: 0; flex-shrink: 0; }
+            .calculator { padding: 32px; }
+            .footer-grid { grid-template-columns: 1fr; }
+            section { padding: 60px 0; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <nav class="container">
+        <div class="logo"><div class="logo-icon">🏠</div>РемСтрой</div>
+        <ul class="nav-links">
+            <li><a href="#types">Виды ремонта</a></li>
+            <li><a href="#process">Как работаем</a></li>
+            <li><a href="#calc">Калькулятор</a></li>
+            <li><a href="#contact">Контакты</a></li>
+        </ul>
+        <a href="#contact" class="btn btn-primary" style="padding: 10px 24px; font-size: 0.9rem;">Бесплатный замер</a>
+    </nav>
+</header>
+
+<section class="hero">
+    <div class="container hero-content">
+        <div>
+            <div class="hero-badges">
+                <span class="badge">Ремонт под ключ</span>
+                <span class="badge">Фиксированная смета</span>
+                <span class="badge">Гарантия 3 года</span>
+            </div>
+            <h1>Ремонт квартир <span>с гарантией до 3 лет</span></h1>
+            <p>От дизайн-проекта до финальной уборки. Собственные бригады. Материалы по оптовым ценам.</p>
+            <div class="hero-price">от <strong>4 500 ₽</strong>/м² косметический</div>
+            <div>
+                <a href="#contact" class="btn btn-primary" style="margin-right: 12px;">Рассчитать ремонт</a>
+                <a href="#types" class="btn btn-outline" style="border-color:rgba(255,255,255,0.4);color:white;">Виды ремонта</a>
+            </div>
+        </div>
+        <div class="hero-visual">
+            <div class="progress-item">
+                <div class="progress-label"><span>Дизайн-проект</span><span>5 дней</span></div>
+                <div class="progress-bar"><div class="progress-fill" style="width:100%"></div></div>
+            </div>
+            <div class="progress-item">
+                <div class="progress-label"><span>Черновые работы</span><span>10-15 дней</span></div>
+                <div class="progress-bar"><div class="progress-fill" style="width:85%"></div></div>
+            </div>
+            <div class="progress-item">
+                <div class="progress-label"><span>Чистовая отделка</span><span>15-25 дней</span></div>
+                <div class="progress-bar"><div class="progress-fill" style="width:60%"></div></div>
+            </div>
+            <div class="progress-item">
+                <div class="progress-label"><span>Сдача объекта</span><span>Итого ~30-45 дней</span></div>
+                <div class="progress-bar"><div class="progress-fill" style="width:30%"></div></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="types">
+    <div class="container">
+        <div class="section-header">
+            <h2>Виды ремонта и цены</h2>
+            <p>Честная смета без скрытых доплат. Фиксируем стоимость в договоре.</p>
+        </div>
+        <div class="types-grid">
+            <div class="type-card">
+                <h3>Косметический</h3>
+                <div class="price">4 500 <span>₽/м²</span></div>
+                <ul>
+                    <li>Оклейка обоями / покраска</li>
+                    <li>Укладка ламината / плитки</li>
+                    <li>Замена розеток и выключателей</li>
+                    <li>Монтаж плинтусов и наличников</li>
+                    <li>Уборка и вывоз мусора</li>
+                </ul>
+                <a href="#contact" class="btn btn-outline" style="width:100%;margin-top:20px;">Заказать</a>
+            </div>
+            <div class="type-card" style="border-color:var(--primary);box-shadow:0 10px 30px rgba(5,150,105,0.1);">
+                <h3>Капитальный</h3>
+                <div class="price">8 500 <span>₽/м²</span></div>
+                <ul>
+                    <li>Всё из косметического</li>
+                    <li>Замена электропроводки</li>
+                    <li>Перепланировка стен</li>
+                    <li>Штукатурка и стяжка пола</li>
+                    <li>Установка дверей</li>
+                    <li>Сантехника и тёплые полы</li>
+                </ul>
+                <a href="#contact" class="btn btn-primary" style="width:100%;margin-top:20px;">Заказать</a>
+            </div>
+            <div class="type-card">
+                <h3>Евроремонт</h3>
+                <div class="price">15 000 <span>₽/м²</span></div>
+                <ul>
+                    <li>Всё из капитального</li>
+                    <li>Дизайн-проект в подарок</li>
+                    <li>Скрытые двери и встроенная мебель</li>
+                    <li>Натяжные / нишевые потолки</li>
+                    <li>Умный дом и сценарии освещения</li>
+                    <li>Авторский надзор</li>
+                </ul>
+                <a href="#contact" class="btn btn-outline" style="width:100%;margin-top:20px;">Заказать</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="process" class="process">
+    <div class="container">
+        <div class="section-header">
+            <h2>Как мы работаем</h2>
+            <p>Прозрачный процесс от замера до сдачи. Вы всегда знаете, на каком этапе объект.</p>
+        </div>
+        <div class="steps">
+            <div class="step">
+                <div class="step-num">1</div>
+                <h4>Бесплатный замер</h4>
+                <p>Выезд мастера, фотоотчёт, замер площадей. В тот же день.</p>
+            </div>
+            <div class="step">
+                <div class="step-num">2</div>
+                <h4>Смета за 24 часа</h4>
+                <p>Детальная смета с расходом материалов. Никаких доплат.</p>
+            </div>
+            <div class="step">
+                <div class="step-num">3</div>
+                <h4>Договор и график</h4>
+                <p>Фиксируем сроки и этапы оплаты. Поэтапная оплата.</p>
+            </div>
+            <div class="step">
+                <div class="step-num">4</div>
+                <h4>Ремонт и контроль</h4>
+                <p>Фотоотчёт каждые 3 дня. Проверка качества прорабом.</p>
+            </div>
+            <div class="step">
+                <div class="step-num">5</div>
+                <h4>Сдача и гарантия</h4>
+                <p>Уборка, вывоз мусора. Гарантийный сертификат на 3 года.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="calc">
+    <div class="container">
+        <div class="calculator">
+            <div class="calc-form">
+                <h3>Калькулятор стоимости</h3>
+                <p>Примерная стоимость ремонта за 30 секунд</p>
+                <div class="calc-field">
+                    <label>Площадь, м²</label>
+                    <input type="number" id="area" value="50" min="10" max="500" oninput="calculate()">
+                </div>
+                <div class="calc-field">
+                    <label>Тип ремонта</label>
+                    <select id="type" onchange="calculate()">
+                        <option value="4500">Косметический — 4 500 ₽/м²</option>
+                        <option value="8500" selected>Капитальный — 8 500 ₽/м²</option>
+                        <option value="15000">Евроремонт — 15 000 ₽/м²</option>
+                    </select>
+                </div>
+                <div class="calc-field">
+                    <label>Количество комнат</label>
+                    <select id="rooms" onchange="calculate()">
+                        <option value="1">Студия / 1 комната</option>
+                        <option value="1.05">2 комнаты</option>
+                        <option value="1.1">3 комнаты</option>
+                        <option value="1.15">4+ комнат</option>
+                    </select>
+                </div>
+            </div>
+            <div class="calc-result">
+                <div class="result-label">Примерная стоимость</div>
+                <div class="result-value" id="result">425 000 ₽</div>
+                <div class="result-note">Точная смета после бесплатного замера</div>
+                <a href="#contact" class="btn btn-light" style="margin-top:24px;">Заказать замер</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="contact" class="contact-section">
+    <div class="container contact-grid">
+        <div class="contact-info">
+            <h3>Бесплатный замер сегодня</h3>
+            <p>Мастер приедет в удобное время, замерит помещение и рассчитает точную смету за 24 часа.</p>
+            <div class="contact-item">
+                <div class="contact-item-icon">📞</div>
+                <div><div style="font-weight:700;">+7 (999) 456-78-90</div><div style="font-size:0.875rem;color:var(--text-light);">Звоните или пишите в WhatsApp</div></div>
+            </div>
+            <div class="contact-item">
+                <div class="contact-item-icon">📍</div>
+                <div><div style="font-weight:700;">Москва и Московская область</div><div style="font-size:0.875rem;color:var(--text-light);">Выезд бесплатно</div></div>
+            </div>
+            <div class="contact-item">
+                <div class="contact-item-icon">📧</div>
+                <div><div style="font-weight:700;">info@remstroy.ru</div><div style="font-size:0.875rem;color:var(--text-light);">Ответим за 15 минут</div></div>
+            </div>
+        </div>
+        <div class="contact-form-box">
+            <form onsubmit="event.preventDefault(); alert('Заявка отправлена! Мастер перезвонит в течение 30 минут.');">
+                <div class="form-group">
+                    <label>Ваше имя</label>
+                    <input type="text" placeholder="Иван Петров" required>
+                </div>
+                <div class="form-group">
+                    <label>Телефон</label>
+                    <input type="tel" placeholder="+7 (999) 000-00-00" required>
+                </div>
+                <div class="form-group">
+                    <label>Адрес объекта</label>
+                    <input type="text" placeholder="ул. Примерная, 10, кв. 25">
+                </div>
+                <div class="form-group">
+                    <label>Тип ремонта</label>
+                    <select><option>Косметический</option><option selected>Капитальный</option><option>Евроремонт</option></select>
+                </div>
+                <div class="form-group">
+                    <label>Комментарий</label>
+                    <textarea placeholder="Площадь 65 м², 2 комнаты, нужно сохранить паркет..."></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width:100%;">Заказать бесплатный замер</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <div class="logo" style="color:white;"><div class="logo-icon">🏠</div>РемСтрой</div>
+                <p>Ремонт квартир под ключ в Москве и области. Работаем с 2015 года. Более 800 сданных объектов.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Услуги</h4>
+                <ul>
+                    <li><a href="#">Косметический ремонт</a></li>
+                    <li><a href="#">Капитальный ремонт</a></li>
+                    <li><a href="#">Евроремонт</a></li>
+                    <li><a href="#">Дизайн-проект</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>Компания</h4>
+                <ul>
+                    <li><a href="#">О нас</a></li>
+                    <li><a href="#">Портфолио</a></li>
+                    <li><a href="#">Отзывы</a></li>
+                    <li><a href="#">Контакты</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            © 2026 РемСтрой. Демо-лендинг. Создан для портфолио веб-разработчика.
+        </div>
+    </div>
+</footer>
+
+<script>
+function calculate() {
+    const area = parseInt(document.getElementById('area').value) || 50;
+    const type = parseInt(document.getElementById('type').value) || 8500;
+    const rooms = parseFloat(document.getElementById('rooms').value) || 1;
+    const total = Math.round(area * type * rooms);
+    document.getElementById('result').textContent = total.toLocaleString('ru-RU') + ' ₽';
+}
+calculate();
+</script>
+
+</body>
+</html>
