@@ -2,7 +2,8 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="Ремонт квартир под ключ в Москве и МО. От 4 500 ₽/м². Бесплатный замер. Гарантия 3 года. Собственные бригады.">
     <title>Ремонт квартир в Москве — под ключ от 4 500 ₽/м²</title>
     <style>
         :root {
@@ -16,13 +17,14 @@
             --dark: #064e3b;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
+        html { scroll-behavior: smooth; -webkit-tap-highlight-color: transparent; }
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            color: var(--text); line-height: 1.6; background: var(--bg);
+            color: var(--text); line-height: 1.6; background: var(--bg); overflow-x: hidden;
         }
         .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
 
+        /* Header */
         header {
             background: rgba(255,255,255,0.95); backdrop-filter: blur(10px);
             position: fixed; width: 100%; top: 0; z-index: 100;
@@ -31,21 +33,36 @@
         nav { display: flex; justify-content: space-between; align-items: center; height: 72px; }
         .logo { font-weight: 800; font-size: 1.25rem; color: var(--dark); display: flex; align-items: center; gap: 8px; }
         .logo-icon { width: 36px; height: 36px; background: linear-gradient(135deg, var(--primary), var(--accent)); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.25rem; }
-        .nav-links { display: flex; gap: 32px; list-style: none; }
+
+        .nav-links { display: flex; gap: 32px; list-style: none; align-items: center; }
         .nav-links a { text-decoration: none; color: var(--text); font-weight: 500; font-size: 0.95rem; transition: color 0.2s; }
         .nav-links a:hover { color: var(--primary); }
+        .nav-links .btn-primary { padding: 10px 24px; font-size: 0.9rem; }
+
+        /* Mobile menu */
+        .menu-toggle {
+            display: none; background: none; border: none; cursor: pointer; padding: 8px; z-index: 101;
+        }
+        .menu-toggle span {
+            display: block; width: 24px; height: 2px; background: var(--dark); margin: 5px 0; transition: 0.3s; border-radius: 1px;
+        }
+        .menu-toggle.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+        .menu-toggle.active span:nth-child(2) { opacity: 0; }
+        .menu-toggle.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
         .btn {
             display: inline-block; padding: 14px 32px; border-radius: 10px;
             font-weight: 700; font-size: 1rem; text-decoration: none; transition: all 0.2s;
-            border: none; cursor: pointer;
+            border: none; cursor: pointer; text-align: center;
         }
         .btn-primary { background: var(--primary); color: white; box-shadow: 0 4px 14px rgba(5,150,105,0.3); }
-        .btn-primary:hover { background: var(--primary-dark); transform: translateY(-1px); }
+        .btn-primary:hover { background: var(--primary-dark); transform: translateY(-2px); }
         .btn-outline { background: transparent; color: var(--primary); border: 2px solid var(--primary); }
         .btn-outline:hover { background: var(--primary); color: white; }
         .btn-light { background: white; color: var(--primary); }
         .btn-light:hover { background: var(--bg-alt); }
 
+        /* Hero */
         .hero {
             padding: 160px 0 100px;
             background: linear-gradient(135deg, #064e3b 0%, #065f46 40%, #059669 100%);
@@ -62,7 +79,7 @@
         .hero-price { display: inline-block; background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); padding: 12px 24px; border-radius: 12px; margin-bottom: 32px; font-size: 1.1rem; }
         .hero-price strong { color: #6ee7b7; font-size: 1.5rem; }
         .hero-badges { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 32px; }
-        .badge { background: rgba(255,255,255,0.1); padding: 8px 16px; border-radius: 8px; font-size: 0.85rem; }
+        .badge { background: rgba(255,255,255,0.1); padding: 8px 16px; border-radius: 8px; font-size: 0.85rem; backdrop-filter: blur(4px); }
         .hero-visual {
             background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
             border-radius: 24px; padding: 32px;
@@ -72,24 +89,33 @@
         .progress-bar { height: 8px; background: rgba(255,255,255,0.1); border-radius: 4px; overflow: hidden; }
         .progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent), #6ee7b7); border-radius: 4px; }
 
+        /* Sections */
         section { padding: 100px 0; }
         .section-header { text-align: center; max-width: 640px; margin: 0 auto 60px; }
         .section-header h2 { font-size: 2.5rem; font-weight: 800; margin-bottom: 16px; color: var(--dark); }
         .section-header p { font-size: 1.125rem; color: var(--text-light); }
 
+        /* Types */
         .types-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
         .type-card {
             border-radius: 20px; padding: 40px 32px; position: relative; overflow: hidden;
-            transition: all 0.3s; border: 1px solid #e5e7eb;
+            transition: all 0.3s; border: 1px solid #e5e7eb; background: white;
         }
         .type-card:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(0,0,0,0.08); }
+        .type-card.featured { border-color: var(--primary); box-shadow: 0 10px 30px rgba(5,150,105,0.1); }
+        .type-card.featured::before {
+            content: 'Популярный'; position: absolute; top: 16px; right: -32px;
+            background: var(--primary); color: white; font-size: 0.7rem; font-weight: 700;
+            padding: 4px 40px; transform: rotate(45deg);
+        }
         .type-card h3 { font-size: 1.35rem; font-weight: 800; margin-bottom: 12px; }
         .type-card .price { font-size: 2rem; font-weight: 800; color: var(--primary); margin-bottom: 16px; }
         .type-card .price span { font-size: 0.9rem; color: var(--text-light); font-weight: 400; }
         .type-card ul { list-style: none; }
         .type-card ul li { padding: 8px 0; color: var(--text-light); font-size: 0.95rem; display: flex; align-items: flex-start; gap: 8px; }
-        .type-card ul li::before { content: '✓'; color: var(--primary); font-weight: 800; }
+        .type-card ul li::before { content: '✓'; color: var(--primary); font-weight: 800; flex-shrink: 0; }
 
+        /* Process */
         .process { background: var(--bg-alt); }
         .steps { display: flex; justify-content: space-between; position: relative; }
         .steps::before {
@@ -97,10 +123,12 @@
             background: linear-gradient(90deg, var(--primary), var(--accent)); z-index: 0;
         }
         .step { text-align: center; position: relative; z-index: 1; flex: 1; }
-        .step-num { width: 50px; height: 50px; border-radius: 50%; background: white; border: 2px solid var(--primary); color: var(--primary); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.25rem; margin: 0 auto 16px; }
+        .step-num { width: 50px; height: 50px; border-radius: 50%; background: white; border: 2px solid var(--primary); color: var(--primary); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.25rem; margin: 0 auto 16px; transition: all 0.3s; }
+        .step:hover .step-num { background: var(--primary); color: white; transform: scale(1.1); }
         .step h4 { font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
         .step p { font-size: 0.85rem; color: var(--text-light); padding: 0 16px; }
 
+        /* Calculator */
         .calculator {
             background: var(--dark); color: white; border-radius: 24px; padding: 60px;
             display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;
@@ -111,6 +139,7 @@
         .calc-field label { display: block; margin-bottom: 8px; font-weight: 600; }
         .calc-field input, .calc-field select {
             width: 100%; padding: 14px; border-radius: 10px; border: none; font-size: 1rem;
+            appearance: none; -webkit-appearance: none;
         }
         .calc-result {
             background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
@@ -120,6 +149,7 @@
         .calc-result .result-value { font-size: 3rem; font-weight: 800; color: #6ee7b7; }
         .calc-result .result-note { font-size: 0.9rem; color: rgba(255,255,255,0.5); margin-top: 16px; }
 
+        /* Contact */
         .contact-section { background: var(--bg); }
         .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
         .contact-form-box {
@@ -130,36 +160,133 @@
         .form-group label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 0.9rem; }
         .form-group input, .form-group textarea, .form-group select {
             width: 100%; padding: 14px 16px; border: 2px solid #e5e7eb; border-radius: 10px;
-            font-size: 1rem; transition: border-color 0.2s; font-family: inherit;
+            font-size: 1rem; transition: border-color 0.2s, box-shadow 0.2s; font-family: inherit;
         }
-        .form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--primary); }
+        .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+            outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(5,150,105,0.1);
+        }
         .form-group textarea { min-height: 120px; resize: vertical; }
         .contact-info h3 { font-size: 2.5rem; font-weight: 800; margin-bottom: 20px; color: var(--dark); }
         .contact-info > p { color: var(--text-light); margin-bottom: 32px; font-size: 1.1rem; }
-        .contact-item { display: flex; align-items: center; gap: 16px; margin-bottom: 24px; padding: 20px; background: var(--bg-alt); border-radius: 12px; }
+        .contact-item { display: flex; align-items: center; gap: 16px; margin-bottom: 24px; padding: 20px; background: var(--bg-alt); border-radius: 12px; transition: all 0.2s; }
+        .contact-item:hover { transform: translateX(4px); }
         .contact-item-icon { width: 48px; height: 48px; border-radius: 12px; background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; font-size: 1.25rem; flex-shrink: 0; }
 
+        /* Footer */
         footer { background: var(--dark); color: white; padding: 50px 0 30px; }
         .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
         .footer-brand p { color: rgba(255,255,255,0.5); margin-top: 12px; font-size: 0.9rem; }
         .footer-links h4 { font-size: 1rem; font-weight: 700; margin-bottom: 16px; }
         .footer-links ul { list-style: none; }
-        .footer-links a { color: rgba(255,255,255,0.5); text-decoration: none; display: block; padding: 6px 0; font-size: 0.9rem; }
+        .footer-links a { color: rgba(255,255,255,0.5); text-decoration: none; display: block; padding: 6px 0; font-size: 0.9rem; transition: color 0.2s; }
         .footer-links a:hover { color: white; }
         .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 24px; text-align: center; color: rgba(255,255,255,0.3); font-size: 0.8rem; }
 
+        /* Fade-in animation */
+        .fade-in {
+            opacity: 0; transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .fade-in.visible {
+            opacity: 1; transform: translateY(0);
+        }
+
+        /* ==================== MOBILE ==================== */
         @media (max-width: 768px) {
-            .hero-content, .calculator, .contact-grid { grid-template-columns: 1fr; }
-            .hero h1 { font-size: 2.25rem; }
-            .hero { padding: 120px 0 60px; }
-            .nav-links { display: none; }
-            .steps { flex-direction: column; gap: 40px; }
-            .steps::before { display: none; }
-            .step { display: flex; align-items: center; text-align: left; gap: 20px; }
-            .step-num { margin: 0; flex-shrink: 0; }
-            .calculator { padding: 32px; }
-            .footer-grid { grid-template-columns: 1fr; }
+            .container { padding: 0 16px; }
+            nav { height: 64px; }
+
+            /* Mobile menu */
+            .menu-toggle { display: block; }
+            .nav-links {
+                position: fixed; top: 64px; right: -100%; width: 80%; max-width: 300px; height: calc(100vh - 64px);
+                background: white; flex-direction: column; padding: 32px 24px; gap: 0;
+                box-shadow: -10px 0 40px rgba(0,0,0,0.1); transition: right 0.3s ease;
+                align-items: flex-start; border-left: 1px solid #e5e7eb;
+            }
+            .nav-links.open { right: 0; }
+            .nav-links li { width: 100%; border-bottom: 1px solid #f3f4f6; }
+            .nav-links a { display: block; padding: 16px 0; font-size: 1.1rem; }
+            .nav-links .btn-primary { margin-top: 16px; width: 100%; text-align: center; padding: 14px; }
+
+            /* Hero mobile */
+            .hero { padding: 100px 0 60px; }
+            .hero-content { grid-template-columns: 1fr; gap: 32px; }
+            .hero h1 { font-size: 2rem; line-height: 1.15; margin-bottom: 16px; }
+            .hero p { font-size: 1rem; margin-bottom: 20px; }
+            .hero-price { padding: 10px 16px; font-size: 0.95rem; margin-bottom: 20px; }
+            .hero-price strong { font-size: 1.25rem; }
+            .hero-badges { margin-bottom: 20px; gap: 8px; }
+            .badge { font-size: 0.75rem; padding: 6px 12px; }
+            .hero-visual { padding: 20px; border-radius: 16px; }
+            .hero .btn { display: block; width: 100%; margin-bottom: 12px !important; }
+            .hero .btn:last-child { margin-bottom: 0 !important; }
+
+            /* Sections mobile */
             section { padding: 60px 0; }
+            .section-header { margin-bottom: 40px; }
+            .section-header h2 { font-size: 1.75rem; }
+            .section-header p { font-size: 1rem; }
+
+            /* Types cards mobile */
+            .types-grid { grid-template-columns: 1fr; gap: 16px; }
+            .type-card { padding: 28px 20px; }
+            .type-card h3 { font-size: 1.2rem; }
+            .type-card .price { font-size: 1.75rem; }
+            .type-card ul li { font-size: 0.9rem; }
+
+            /* Steps mobile */
+            .steps { flex-direction: column; gap: 0; padding-left: 24px; }
+            .steps::before {
+                left: 24px; top: 0; bottom: 0; right: auto; width: 2px; height: auto;
+                background: linear-gradient(180deg, var(--primary), var(--accent));
+            }
+            .step {
+                display: flex; align-items: flex-start; text-align: left; gap: 16px;
+                padding: 20px 0; position: relative;
+            }
+            .step:first-child { padding-top: 0; }
+            .step:last-child { padding-bottom: 0; }
+            .step-num { margin: 0; flex-shrink: 0; width: 40px; height: 40px; font-size: 1rem; }
+            .step h4 { margin-bottom: 4px; }
+            .step p { padding: 0; font-size: 0.85rem; }
+
+            /* Calculator mobile */
+            .calculator { grid-template-columns: 1fr; gap: 32px; padding: 32px 20px; }
+            .calc-form h3 { font-size: 1.5rem; }
+            .calc-form p { margin-bottom: 24px; }
+            .calc-result { padding: 28px 20px; }
+            .calc-result .result-value { font-size: 2.25rem; }
+            .calc-field input, .calc-field select { padding: 12px; }
+
+            /* Contact mobile */
+            .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+            .contact-info h3 { font-size: 1.75rem; }
+            .contact-info > p { font-size: 1rem; margin-bottom: 24px; }
+            .contact-item { padding: 16px; margin-bottom: 16px; }
+            .contact-item-icon { width: 40px; height: 40px; font-size: 1rem; }
+            .contact-form-box { padding: 24px 20px; }
+            .form-group input, .form-group textarea, .form-group select { padding: 12px 14px; font-size: 16px; }
+
+            /* Footer mobile */
+            .footer-grid { grid-template-columns: 1fr; gap: 32px; text-align: center; }
+            .footer-links h4 { margin-bottom: 12px; }
+            .footer-links ul { display: flex; flex-wrap: wrap; justify-content: center; gap: 0 20px; }
+            .footer-links a { padding: 4px 0; }
+        }
+
+        /* Small phones */
+        @media (max-width: 360px) {
+            .hero h1 { font-size: 1.75rem; }
+            .section-header h2 { font-size: 1.5rem; }
+            .type-card { padding: 24px 16px; }
+            .calculator { padding: 24px 16px; }
+            .calc-result .result-value { font-size: 2rem; }
+        }
+
+        /* Large desktop */
+        @media (min-width: 1400px) {
+            .container { max-width: 1280px; }
         }
     </style>
 </head>
@@ -167,14 +294,17 @@
 
 <header>
     <nav class="container">
-        <div class="logo"><div class="logo-icon">🏠</div>РемСтрой</div>
-        <ul class="nav-links">
-            <li><a href="#types">Виды ремонта</a></li>
-            <li><a href="#process">Как работаем</a></li>
-            <li><a href="#calc">Калькулятор</a></li>
-            <li><a href="#contact">Контакты</a></li>
+        <div class="logo"><div class="logo-icon">&#127968;</div>&#1056;&#1077;&#1084;&#1057;&#1090;&#1088;&#1086;&#1081;</div>
+        <button class="menu-toggle" aria-label="&#1054;&#1090;&#1082;&#1088;&#1099;&#1090;&#1100; &#1084;&#1077;&#1085;&#1102;" onclick="toggleMenu()">
+            <span></span><span></span><span></span>
+        </button>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#types" onclick="closeMenu()">&#1042;&#1080;&#1076;&#1099; &#1088;&#1077;&#1084;&#1086;&#1085;&#1090;&#1072;</a></li>
+            <li><a href="#process" onclick="closeMenu()">&#1050;&#1072;&#1082; &#1088;&#1072;&#1073;&#1086;&#1090;&#1072;&#1077;&#1084;</a></li>
+            <li><a href="#calc" onclick="closeMenu()">&#1050;&#1072;&#1083;&#1100;&#1082;&#1091;&#1083;&#1103;&#1090;&#1086;&#1088;</a></li>
+            <li><a href="#contact" onclick="closeMenu()">&#1050;&#1086;&#1085;&#1090;&#1072;&#1082;&#1090;&#1099;</a></li>
+            <li><a href="#contact" class="btn btn-primary" onclick="closeMenu()">&#1041;&#1077;&#1089;&#1087;&#1083;&#1072;&#1090;&#1085;&#1099;&#1081; &#1079;&#1072;&#1084;&#1077;&#1088;</a></li>
         </ul>
-        <a href="#contact" class="btn btn-primary" style="padding: 10px 24px; font-size: 0.9rem;">Бесплатный замер</a>
     </nav>
 </header>
 
@@ -182,203 +312,213 @@
     <div class="container hero-content">
         <div>
             <div class="hero-badges">
-                <span class="badge">Ремонт под ключ</span>
-                <span class="badge">Фиксированная смета</span>
-                <span class="badge">Гарантия 3 года</span>
+                <span class="badge">&#1056;&#1077;&#1084;&#1086;&#1085;&#1090; &#1087;&#1086;&#1076; &#1082;&#1083;&#1102;&#1095;</span>
+                <span class="badge">&#1060;&#1080;&#1082;&#1089;&#1080;&#1088;&#1086;&#1074;&#1072;&#1085;&#1085;&#1072;&#1103; &#1089;&#1084;&#1077;&#1090;&#1072;</span>
+                <span class="badge">&#1043;&#1072;&#1088;&#1072;&#1085;&#1090;&#1080;&#1103; 3 &#1075;&#1086;&#1076;&#1072;</span>
             </div>
-            <h1>Ремонт квартир <span>с гарантией до 3 лет</span></h1>
-            <p>От дизайн-проекта до финальной уборки. Собственные бригады. Материалы по оптовым ценам.</p>
-            <div class="hero-price">от <strong>4 500 ₽</strong>/м² косметический</div>
+            <h1>&#1056;&#1077;&#1084;&#1086;&#1085;&#1090; &#1082;&#1074;&#1072;&#1088;&#1090;&#1080;&#1088; <span>&#1089; &#1075;&#1072;&#1088;&#1072;&#1085;&#1090;&#1080;&#1077;&#1081; &#1076;&#1086; 3 &#1083;&#1077;&#1090;</span></h1>
+            <p>&#1054;&#1090; &#1076;&#1080;&#1079;&#1072;&#1081;&#1085;-&#1087;&#1088;&#1086;&#1077;&#1082;&#1090;&#1072; &#1076;&#1086; &#1092;&#1080;&#1085;&#1072;&#1083;&#1100;&#1085;&#1086;&#1081; &#1091;&#1073;&#1086;&#1088;&#1082;&#1080;. &#1057;&#1086;&#1073;&#1089;&#1090;&#1074;&#1077;&#1085;&#1085;&#1099;&#1077; &#1073;&#1088;&#1080;&#1075;&#1072;&#1076;&#1099;. &#1052;&#1072;&#1090;&#1077;&#1088;&#1080;&#1072;&#1083;&#1099; &#1087;&#1086; &#1086;&#1087;&#1090;&#1086;&#1074;&#1099;&#1084; &#1094;&#1077;&#1085;&#1072;&#1084;.</p>
+            <div class="hero-price">&#1086;&#1090; <strong>4 500 &#8381;</strong>/&#1084;&#178; &#1082;&#1086;&#1089;&#1084;&#1077;&#1090;&#1080;&#1095;&#1077;&#1089;&#1082;&#1080;&#1081;</div>
             <div>
-                <a href="#contact" class="btn btn-primary" style="margin-right: 12px;">Рассчитать ремонт</a>
-                <a href="#types" class="btn btn-outline" style="border-color:rgba(255,255,255,0.4);color:white;">Виды ремонта</a>
+                <a href="#contact" class="btn btn-primary" style="margin-right: 12px;">&#1056;&#1072;&#1089;&#1089;&#1095;&#1080;&#1090;&#1072;&#1090;&#1100; &#1088;&#1077;&#1084;&#1086;&#1085;&#1090;</a>
+                <a href="#types" class="btn btn-outline" style="border-color:rgba(255,255,255,0.4);color:white;">&#1042;&#1080;&#1076;&#1099; &#1088;&#1077;&#1084;&#1086;&#1085;&#1090;&#1072;</a>
             </div>
         </div>
         <div class="hero-visual">
             <div class="progress-item">
-                <div class="progress-label"><span>Дизайн-проект</span><span>5 дней</span></div>
+                <div class="progress-label"><span>&#1044;&#1080;&#1079;&#1072;&#1081;&#1085;-&#1087;&#1088;&#1086;&#1077;&#1082;&#1090;</span><span>5 &#1076;&#1085;&#1077;&#1081;</span></div>
                 <div class="progress-bar"><div class="progress-fill" style="width:100%"></div></div>
             </div>
             <div class="progress-item">
-                <div class="progress-label"><span>Черновые работы</span><span>10-15 дней</span></div>
+                <div class="progress-label"><span>&#1063;&#1077;&#1088;&#1085;&#1086;&#1074;&#1099;&#1077; &#1088;&#1072;&#1073;&#1086;&#1090;&#1099;</span><span>10-15 &#1076;&#1085;&#1077;&#1081;</span></div>
                 <div class="progress-bar"><div class="progress-fill" style="width:85%"></div></div>
             </div>
             <div class="progress-item">
-                <div class="progress-label"><span>Чистовая отделка</span><span>15-25 дней</span></div>
+                <div class="progress-label"><span>&#1063;&#1080;&#1089;&#1090;&#1086;&#1074;&#1072;&#1103; &#1086;&#1090;&#1076;&#1077;&#1083;&#1082;&#1072;</span><span>15-25 &#1076;&#1085;&#1077;&#1081;</span></div>
                 <div class="progress-bar"><div class="progress-fill" style="width:60%"></div></div>
             </div>
             <div class="progress-item">
-                <div class="progress-label"><span>Сдача объекта</span><span>Итого ~30-45 дней</span></div>
+                <div class="progress-label"><span>&#1057;&#1076;&#1072;&#1095;&#1072; &#1086;&#1073;&#1098;&#1077;&#1082;&#1090;&#1072;</span><span>&#1048;&#1090;&#1086;&#1075;&#1086; ~30-45 &#1076;&#1085;&#1077;&#1081;</span></div>
                 <div class="progress-bar"><div class="progress-fill" style="width:30%"></div></div>
             </div>
         </div>
     </div>
 </section>
 
-<section id="types">
+<section id="types" class="fade-in">
     <div class="container">
         <div class="section-header">
-            <h2>Виды ремонта и цены</h2>
-            <p>Честная смета без скрытых доплат. Фиксируем стоимость в договоре.</p>
+            <h2>&#1042;&#1080;&#1076;&#1099; &#1088;&#1077;&#1084;&#1086;&#1085;&#1090;&#1072; &#1080; &#1094;&#1077;&#1085;&#1099;</h2>
+            <p>&#1063;&#1077;&#1089;&#1090;&#1085;&#1072;&#1103; &#1089;&#1084;&#1077;&#1090;&#1072; &#1073;&#1077;&#1079; &#1089;&#1082;&#1088;&#1099;&#1090;&#1099;&#1093; &#1076;&#1086;&#1087;&#1083;&#1072;&#1090;. &#1060;&#1080;&#1082;&#1089;&#1080;&#1088;&#1091;&#1077;&#1084; &#1089;&#1090;&#1086;&#1080;&#1084;&#1086;&#1089;&#1090;&#1100; &#1074; &#1076;&#1086;&#1075;&#1086;&#1074;&#1086;&#1088;&#1077;.</p>
         </div>
         <div class="types-grid">
             <div class="type-card">
-                <h3>Косметический</h3>
-                <div class="price">4 500 <span>₽/м²</span></div>
+                <h3>&#1050;&#1086;&#1089;&#1084;&#1077;&#1090;&#1080;&#1095;&#1077;&#1089;&#1082;&#1080;&#1081;</h3>
+                <div class="price">4 500 <span>&#8381;/&#1084;&#178;</span></div>
                 <ul>
-                    <li>Оклейка обоями / покраска</li>
-                    <li>Укладка ламината / плитки</li>
-                    <li>Замена розеток и выключателей</li>
-                    <li>Монтаж плинтусов и наличников</li>
-                    <li>Уборка и вывоз мусора</li>
+                    <li>&#1054;&#1082;&#1083;&#1077;&#1081;&#1082;&#1072; &#1086;&#1073;&#1086;&#1103;&#1084;&#1080; / &#1087;&#1086;&#1082;&#1088;&#1072;&#1089;&#1082;&#1072;</li>
+                    <li>&#1059;&#1082;&#1083;&#1072;&#1076;&#1082;&#1072; &#1083;&#1072;&#1084;&#1080;&#1085;&#1072;&#1090;&#1072; / &#1087;&#1083;&#1080;&#1090;&#1082;&#1080;</li>
+                    <li>&#1047;&#1072;&#1084;&#1077;&#1085;&#1072; &#1088;&#1086;&#1079;&#1077;&#1090;&#1086;&#1082; &#1080; &#1074;&#1099;&#1082;&#1083;&#1102;&#1095;&#1072;&#1090;&#1077;&#1083;&#1077;&#1081;</li>
+                    <li>&#1052;&#1086;&#1085;&#1090;&#1072;&#1078; &#1087;&#1083;&#1080;&#1085;&#1090;&#1091;&#1089;&#1086;&#1074; &#1080; &#1085;&#1072;&#1083;&#1080;&#1095;&#1085;&#1080;&#1082;&#1086;&#1074;</li>
+                    <li>&#1059;&#1073;&#1086;&#1088;&#1082;&#1072; &#1080; &#1074;&#1099;&#1074;&#1086;&#1079; &#1084;&#1091;&#1089;&#1086;&#1088;&#1072;</li>
                 </ul>
-                <a href="#contact" class="btn btn-outline" style="width:100%;margin-top:20px;">Заказать</a>
+                <a href="#contact" class="btn btn-outline" style="width:100%;margin-top:20px;">&#1047;&#1072;&#1082;&#1072;&#1079;&#1072;&#1090;&#1100;</a>
             </div>
-            <div class="type-card" style="border-color:var(--primary);box-shadow:0 10px 30px rgba(5,150,105,0.1);">
-                <h3>Капитальный</h3>
-                <div class="price">8 500 <span>₽/м²</span></div>
+            <div class="type-card featured">
+                <h3>&#1050;&#1072;&#1087;&#1080;&#1090;&#1072;&#1083;&#1100;&#1085;&#1099;&#1081;</h3>
+                <div class="price">8 500 <span>&#8381;/&#1084;&#178;</span></div>
                 <ul>
-                    <li>Всё из косметического</li>
-                    <li>Замена электропроводки</li>
-                    <li>Перепланировка стен</li>
-                    <li>Штукатурка и стяжка пола</li>
-                    <li>Установка дверей</li>
-                    <li>Сантехника и тёплые полы</li>
+                    <li>&#1042;&#1089;&#1105; &#1080;&#1079; &#1082;&#1086;&#1089;&#1084;&#1077;&#1090;&#1080;&#1095;&#1077;&#1089;&#1082;&#1086;&#1075;&#1086;</li>
+                    <li>&#1047;&#1072;&#1084;&#1077;&#1085;&#1072; &#1101;&#1083;&#1077;&#1082;&#1090;&#1088;&#1086;&#1087;&#1088;&#1086;&#1074;&#1086;&#1076;&#1082;&#1080;</li>
+                    <li>&#1055;&#1077;&#1088;&#1077;&#1087;&#1083;&#1072;&#1085;&#1080;&#1088;&#1086;&#1074;&#1082;&#1072; &#1089;&#1090;&#1077;&#1085;</li>
+                    <li>&#1064;&#1090;&#1091;&#1082;&#1072;&#1090;&#1091;&#1088;&#1082;&#1072; &#1080; &#1089;&#1090;&#1103;&#1078;&#1082;&#1072; &#1087;&#1086;&#1083;&#1072;</li>
+                    <li>&#1059;&#1089;&#1090;&#1072;&#1085;&#1086;&#1074;&#1082;&#1072; &#1076;&#1074;&#1077;&#1088;&#1077;&#1081;</li>
+                    <li>&#1057;&#1072;&#1085;&#1090;&#1077;&#1093;&#1085;&#1080;&#1082;&#1072; &#1080; &#1090;&#1105;&#1087;&#1083;&#1099;&#1077; &#1087;&#1086;&#1083;&#1099;</li>
                 </ul>
-                <a href="#contact" class="btn btn-primary" style="width:100%;margin-top:20px;">Заказать</a>
+                <a href="#contact" class="btn btn-primary" style="width:100%;margin-top:20px;">&#1047;&#1072;&#1082;&#1072;&#1079;&#1072;&#1090;&#1100;</a>
             </div>
             <div class="type-card">
-                <h3>Евроремонт</h3>
-                <div class="price">15 000 <span>₽/м²</span></div>
+                <h3>&#1045;&#1074;&#1088;&#1086;&#1088;&#1077;&#1084;&#1086;&#1085;&#1090;</h3>
+                <div class="price">15 000 <span>&#8381;/&#1084;&#178;</span></div>
                 <ul>
-                    <li>Всё из капитального</li>
-                    <li>Дизайн-проект в подарок</li>
-                    <li>Скрытые двери и встроенная мебель</li>
-                    <li>Натяжные / нишевые потолки</li>
-                    <li>Умный дом и сценарии освещения</li>
-                    <li>Авторский надзор</li>
+                    <li>&#1042;&#1089;&#1105; &#1080;&#1079; &#1082;&#1072;&#1087;&#1080;&#1090;&#1072;&#1083;&#1100;&#1085;&#1086;&#1075;&#1086;</li>
+                    <li>&#1044;&#1080;&#1079;&#1072;&#1081;&#1085;-&#1087;&#1088;&#1086;&#1077;&#1082;&#1090; &#1074; &#1087;&#1086;&#1076;&#1072;&#1088;&#1086;&#1082;</li>
+                    <li>&#1057;&#1082;&#1088;&#1099;&#1090;&#1099;&#1077; &#1076;&#1074;&#1077;&#1088;&#1080; &#1080; &#1074;&#1089;&#1090;&#1088;&#1086;&#1077;&#1085;&#1085;&#1072;&#1103; &#1084;&#1077;&#1073;&#1077;&#1083;&#1100;</li>
+                    <li>&#1053;&#1072;&#1090;&#1103;&#1078;&#1085;&#1099;&#1077; / &#1085;&#1080;&#1096;&#1077;&#1074;&#1099;&#1077; &#1087;&#1086;&#1090;&#1086;&#1083;&#1082;&#1080;</li>
+                    <li>&#1059;&#1084;&#1085;&#1099;&#1081; &#1076;&#1086;&#1084; &#1080; &#1089;&#1094;&#1077;&#1085;&#1072;&#1088;&#1080;&#1080; &#1086;&#1089;&#1074;&#1077;&#1097;&#1077;&#1085;&#1080;&#1103;</li>
+                    <li>&#1040;&#1074;&#1090;&#1086;&#1088;&#1089;&#1082;&#1080;&#1081; &#1085;&#1072;&#1076;&#1079;&#1086;&#1088;</li>
                 </ul>
-                <a href="#contact" class="btn btn-outline" style="width:100%;margin-top:20px;">Заказать</a>
+                <a href="#contact" class="btn btn-outline" style="width:100%;margin-top:20px;">&#1047;&#1072;&#1082;&#1072;&#1079;&#1072;&#1090;&#1100;</a>
             </div>
         </div>
     </div>
 </section>
 
-<section id="process" class="process">
+<section id="process" class="process fade-in">
     <div class="container">
         <div class="section-header">
-            <h2>Как мы работаем</h2>
-            <p>Прозрачный процесс от замера до сдачи. Вы всегда знаете, на каком этапе объект.</p>
+            <h2>&#1050;&#1072;&#1082; &#1084;&#1099; &#1088;&#1072;&#1073;&#1086;&#1090;&#1072;&#1077;&#1084;</h2>
+            <p>&#1055;&#1088;&#1086;&#1079;&#1088;&#1072;&#1095;&#1085;&#1099;&#1081; &#1087;&#1088;&#1086;&#1094;&#1077;&#1089;&#1089; &#1086;&#1090; &#1079;&#1072;&#1084;&#1077;&#1088;&#1072; &#1076;&#1086; &#1089;&#1076;&#1072;&#1095;&#1080;. &#1042;&#1099; &#1074;&#1089;&#1077;&#1075;&#1076;&#1072; &#1079;&#1085;&#1072;&#1077;&#1090;&#1077;, &#1085;&#1072; &#1082;&#1072;&#1082;&#1086;&#1084; &#1101;&#1090;&#1072;&#1087;&#1077; &#1086;&#1073;&#1098;&#1077;&#1082;&#1090;.</p>
         </div>
         <div class="steps">
             <div class="step">
                 <div class="step-num">1</div>
-                <h4>Бесплатный замер</h4>
-                <p>Выезд мастера, фотоотчёт, замер площадей. В тот же день.</p>
+                <div>
+                    <h4>&#1041;&#1077;&#1089;&#1087;&#1083;&#1072;&#1090;&#1085;&#1099;&#1081; &#1079;&#1072;&#1084;&#1077;&#1088;</h4>
+                    <p>&#1042;&#1099;&#1077;&#1079;&#1076; &#1084;&#1072;&#1089;&#1090;&#1077;&#1088;&#1072;, &#1092;&#1086;&#1090;&#1086;&#1086;&#1090;&#1095;&#1105;&#1090;, &#1079;&#1072;&#1084;&#1077;&#1088; &#1087;&#1083;&#1086;&#1097;&#1072;&#1076;&#1077;&#1081;. &#1042; &#1090;&#1086;&#1090; &#1078;&#1077; &#1076;&#1077;&#1085;&#1100;.</p>
+                </div>
             </div>
             <div class="step">
                 <div class="step-num">2</div>
-                <h4>Смета за 24 часа</h4>
-                <p>Детальная смета с расходом материалов. Никаких доплат.</p>
+                <div>
+                    <h4>&#1057;&#1084;&#1077;&#1090;&#1072; &#1079;&#1072; 24 &#1095;&#1072;&#1089;&#1072;</h4>
+                    <p>&#1044;&#1077;&#1090;&#1072;&#1083;&#1100;&#1085;&#1072;&#1103; &#1089;&#1084;&#1077;&#1090;&#1072; &#1089; &#1088;&#1072;&#1089;&#1093;&#1086;&#1076;&#1086;&#1084; &#1084;&#1072;&#1090;&#1077;&#1088;&#1080;&#1072;&#1083;&#1086;&#1074;. &#1053;&#1080;&#1082;&#1072;&#1082;&#1080;&#1093; &#1076;&#1086;&#1087;&#1083;&#1072;&#1090;.</p>
+                </div>
             </div>
             <div class="step">
                 <div class="step-num">3</div>
-                <h4>Договор и график</h4>
-                <p>Фиксируем сроки и этапы оплаты. Поэтапная оплата.</p>
+                <div>
+                    <h4>&#1044;&#1086;&#1075;&#1086;&#1074;&#1086;&#1088; &#1080; &#1075;&#1088;&#1072;&#1092;&#1080;&#1082;</h4>
+                    <p>&#1060;&#1080;&#1082;&#1089;&#1080;&#1088;&#1091;&#1077;&#1084; &#1089;&#1088;&#1086;&#1082;&#1080; &#1080; &#1101;&#1090;&#1072;&#1087;&#1099; &#1086;&#1087;&#1083;&#1072;&#1090;&#1099;. &#1055;&#1086;&#1101;&#1090;&#1072;&#1087;&#1085;&#1072;&#1103; &#1086;&#1087;&#1083;&#1072;&#1090;&#1072;.</p>
+                </div>
             </div>
             <div class="step">
                 <div class="step-num">4</div>
-                <h4>Ремонт и контроль</h4>
-                <p>Фотоотчёт каждые 3 дня. Проверка качества прорабом.</p>
+                <div>
+                    <h4>&#1056;&#1077;&#1084;&#1086;&#1085;&#1090; &#1080; &#1082;&#1086;&#1085;&#1090;&#1088;&#1086;&#1083;&#1100;</h4>
+                    <p>&#1060;&#1086;&#1090;&#1086;&#1086;&#1090;&#1095;&#1105;&#1090; &#1082;&#1072;&#1078;&#1076;&#1099;&#1077; 3 &#1076;&#1085;&#1103;. &#1055;&#1088;&#1086;&#1074;&#1077;&#1088;&#1082;&#1072; &#1082;&#1072;&#1095;&#1077;&#1089;&#1090;&#1074;&#1072; &#1087;&#1088;&#1086;&#1088;&#1072;&#1073;&#1086;&#1084;.</p>
+                </div>
             </div>
             <div class="step">
                 <div class="step-num">5</div>
-                <h4>Сдача и гарантия</h4>
-                <p>Уборка, вывоз мусора. Гарантийный сертификат на 3 года.</p>
+                <div>
+                    <h4>&#1057;&#1076;&#1072;&#1095;&#1072; &#1080; &#1075;&#1072;&#1088;&#1072;&#1085;&#1090;&#1080;&#1103;</h4>
+                    <p>&#1059;&#1073;&#1086;&#1088;&#1082;&#1072;, &#1074;&#1099;&#1074;&#1086;&#1079; &#1084;&#1091;&#1089;&#1086;&#1088;&#1072;. &#1043;&#1072;&#1088;&#1072;&#1085;&#1090;&#1080;&#1081;&#1085;&#1099;&#1081; &#1089;&#1077;&#1088;&#1090;&#1080;&#1092;&#1080;&#1082;&#1072;&#1090; &#1085;&#1072; 3 &#1075;&#1086;&#1076;&#1072;.</p>
+                </div>
             </div>
         </div>
     </div>
 </section>
 
-<section id="calc">
+<section id="calc" class="fade-in">
     <div class="container">
         <div class="calculator">
             <div class="calc-form">
-                <h3>Калькулятор стоимости</h3>
-                <p>Примерная стоимость ремонта за 30 секунд</p>
+                <h3>&#1050;&#1072;&#1083;&#1100;&#1082;&#1091;&#1083;&#1103;&#1090;&#1086;&#1088; &#1089;&#1090;&#1086;&#1080;&#1084;&#1086;&#1089;&#1090;&#1080;</h3>
+                <p>&#1055;&#1088;&#1080;&#1084;&#1077;&#1088;&#1085;&#1072;&#1103; &#1089;&#1090;&#1086;&#1080;&#1084;&#1086;&#1089;&#1090;&#1100; &#1088;&#1077;&#1084;&#1086;&#1085;&#1090;&#1072; &#1079;&#1072; 30 &#1089;&#1077;&#1082;&#1091;&#1085;&#1076;</p>
                 <div class="calc-field">
-                    <label>Площадь, м²</label>
+                    <label>&#1055;&#1083;&#1086;&#1097;&#1072;&#1076;&#1100;, &#1084;&#178;</label>
                     <input type="number" id="area" value="50" min="10" max="500" oninput="calculate()">
                 </div>
                 <div class="calc-field">
-                    <label>Тип ремонта</label>
+                    <label>&#1058;&#1080;&#1087; &#1088;&#1077;&#1084;&#1086;&#1085;&#1090;&#1072;</label>
                     <select id="type" onchange="calculate()">
-                        <option value="4500">Косметический — 4 500 ₽/м²</option>
-                        <option value="8500" selected>Капитальный — 8 500 ₽/м²</option>
-                        <option value="15000">Евроремонт — 15 000 ₽/м²</option>
+                        <option value="4500">&#1050;&#1086;&#1089;&#1084;&#1077;&#1090;&#1080;&#1095;&#1077;&#1089;&#1082;&#1080;&#1081; &#8212; 4 500 &#8381;/&#1084;&#178;</option>
+                        <option value="8500" selected>&#1050;&#1072;&#1087;&#1080;&#1090;&#1072;&#1083;&#1100;&#1085;&#1099;&#1081; &#8212; 8 500 &#8381;/&#1084;&#178;</option>
+                        <option value="15000">&#1045;&#1074;&#1088;&#1086;&#1088;&#1077;&#1084;&#1086;&#1085;&#1090; &#8212; 15 000 &#8381;/&#1084;&#178;</option>
                     </select>
                 </div>
                 <div class="calc-field">
-                    <label>Количество комнат</label>
+                    <label>&#1050;&#1086;&#1083;&#1080;&#1095;&#1077;&#1089;&#1090;&#1074;&#1086; &#1082;&#1086;&#1084;&#1085;&#1072;&#1090;</label>
                     <select id="rooms" onchange="calculate()">
-                        <option value="1">Студия / 1 комната</option>
-                        <option value="1.05">2 комнаты</option>
-                        <option value="1.1">3 комнаты</option>
-                        <option value="1.15">4+ комнат</option>
+                        <option value="1">&#1057;&#1090;&#1091;&#1076;&#1080;&#1103; / 1 &#1082;&#1086;&#1084;&#1085;&#1072;&#1090;&#1072;</option>
+                        <option value="1.05">2 &#1082;&#1086;&#1084;&#1085;&#1072;&#1090;&#1099;</option>
+                        <option value="1.1">3 &#1082;&#1086;&#1084;&#1085;&#1072;&#1090;&#1099;</option>
+                        <option value="1.15">4+ &#1082;&#1086;&#1084;&#1085;&#1072;&#1090;</option>
                     </select>
                 </div>
             </div>
             <div class="calc-result">
-                <div class="result-label">Примерная стоимость</div>
-                <div class="result-value" id="result">425 000 ₽</div>
-                <div class="result-note">Точная смета после бесплатного замера</div>
-                <a href="#contact" class="btn btn-light" style="margin-top:24px;">Заказать замер</a>
+                <div class="result-label">&#1055;&#1088;&#1080;&#1084;&#1077;&#1088;&#1085;&#1072;&#1103; &#1089;&#1090;&#1086;&#1080;&#1084;&#1086;&#1089;&#1090;&#1100;</div>
+                <div class="result-value" id="result">425 000 &#8381;</div>
+                <div class="result-note">&#1058;&#1086;&#1095;&#1085;&#1072;&#1103; &#1089;&#1084;&#1077;&#1090;&#1072; &#1087;&#1086;&#1089;&#1083;&#1077; &#1073;&#1077;&#1089;&#1087;&#1083;&#1072;&#1090;&#1085;&#1086;&#1075;&#1086; &#1079;&#1072;&#1084;&#1077;&#1088;&#1072;</div>
+                <a href="#contact" class="btn btn-light" style="margin-top:24px;">&#1047;&#1072;&#1082;&#1072;&#1079;&#1072;&#1090;&#1100; &#1079;&#1072;&#1084;&#1077;&#1088;</a>
             </div>
         </div>
     </div>
 </section>
 
-<section id="contact" class="contact-section">
+<section id="contact" class="contact-section fade-in">
     <div class="container contact-grid">
         <div class="contact-info">
-            <h3>Бесплатный замер сегодня</h3>
-            <p>Мастер приедет в удобное время, замерит помещение и рассчитает точную смету за 24 часа.</p>
+            <h3>&#1041;&#1077;&#1089;&#1087;&#1083;&#1072;&#1090;&#1085;&#1099;&#1081; &#1079;&#1072;&#1084;&#1077;&#1088; &#1089;&#1077;&#1075;&#1086;&#1076;&#1085;&#1103;</h3>
+            <p>&#1052;&#1072;&#1089;&#1090;&#1077;&#1088; &#1087;&#1088;&#1080;&#1077;&#1076;&#1077;&#1090; &#1074; &#1091;&#1076;&#1086;&#1073;&#1085;&#1086;&#1077; &#1074;&#1088;&#1077;&#1084;&#1103;, &#1079;&#1072;&#1084;&#1077;&#1088;&#1080;&#1090; &#1087;&#1086;&#1084;&#1077;&#1097;&#1077;&#1085;&#1080;&#1077; &#1080; &#1088;&#1072;&#1089;&#1089;&#1095;&#1080;&#1090;&#1072;&#1077;&#1090; &#1090;&#1086;&#1095;&#1085;&#1091;&#1102; &#1089;&#1084;&#1077;&#1090;&#1091; &#1079;&#1072; 24 &#1095;&#1072;&#1089;&#1072;.</p>
             <div class="contact-item">
-                <div class="contact-item-icon">📞</div>
-                <div><div style="font-weight:700;">+7 (999) 456-78-90</div><div style="font-size:0.875rem;color:var(--text-light);">Звоните или пишите в WhatsApp</div></div>
+                <div class="contact-item-icon">&#128222;</div>
+                <div><div style="font-weight:700;">+7 (999) 456-78-90</div><div style="font-size:0.875rem;color:var(--text-light);">&#1047;&#1074;&#1086;&#1085;&#1080;&#1090;&#1077; &#1080;&#1083;&#1080; &#1087;&#1080;&#1096;&#1080;&#1090;&#1077; &#1074; WhatsApp</div></div>
             </div>
             <div class="contact-item">
-                <div class="contact-item-icon">📍</div>
-                <div><div style="font-weight:700;">Москва и Московская область</div><div style="font-size:0.875rem;color:var(--text-light);">Выезд бесплатно</div></div>
+                <div class="contact-item-icon">&#128205;</div>
+                <div><div style="font-weight:700;">&#1052;&#1086;&#1089;&#1082;&#1074;&#1072; &#1080; &#1052;&#1086;&#1089;&#1082;&#1086;&#1074;&#1089;&#1082;&#1072;&#1103; &#1086;&#1073;&#1083;&#1072;&#1089;&#1090;&#1100;</div><div style="font-size:0.875rem;color:var(--text-light);">&#1042;&#1099;&#1077;&#1079;&#1076; &#1073;&#1077;&#1089;&#1087;&#1083;&#1072;&#1090;&#1085;&#1086;</div></div>
             </div>
             <div class="contact-item">
-                <div class="contact-item-icon">📧</div>
-                <div><div style="font-weight:700;">info@remstroy.ru</div><div style="font-size:0.875rem;color:var(--text-light);">Ответим за 15 минут</div></div>
+                <div class="contact-item-icon">&#9993;</div>
+                <div><div style="font-weight:700;">info@remstroy.ru</div><div style="font-size:0.875rem;color:var(--text-light);">&#1054;&#1090;&#1074;&#1077;&#1090;&#1080;&#1084; &#1079;&#1072; 15 &#1084;&#1080;&#1085;&#1091;&#1090;</div></div>
             </div>
         </div>
         <div class="contact-form-box">
-            <form onsubmit="event.preventDefault(); alert('Заявка отправлена! Мастер перезвонит в течение 30 минут.');">
+            <form onsubmit="event.preventDefault(); alert('&#1047;&#1072;&#1103;&#1074;&#1082;&#1072; &#1086;&#1090;&#1087;&#1088;&#1072;&#1074;&#1083;&#1077;&#1085;&#1072;! &#1052;&#1072;&#1089;&#1090;&#1077;&#1088; &#1087;&#1077;&#1088;&#1077;&#1079;&#1074;&#1086;&#1085;&#1080;&#1090; &#1074; &#1090;&#1077;&#1095;&#1077;&#1085;&#1080;&#1077; 30 &#1084;&#1080;&#1085;&#1091;&#1090;.');">
                 <div class="form-group">
-                    <label>Ваше имя</label>
-                    <input type="text" placeholder="Иван Петров" required>
+                    <label>&#1042;&#1072;&#1096;&#1077; &#1080;&#1084;&#1103;</label>
+                    <input type="text" placeholder="&#1048;&#1074;&#1072;&#1085; &#1055;&#1077;&#1090;&#1088;&#1086;&#1074;" required>
                 </div>
                 <div class="form-group">
-                    <label>Телефон</label>
+                    <label>&#1058;&#1077;&#1083;&#1077;&#1092;&#1086;&#1085;</label>
                     <input type="tel" placeholder="+7 (999) 000-00-00" required>
                 </div>
                 <div class="form-group">
-                    <label>Адрес объекта</label>
-                    <input type="text" placeholder="ул. Примерная, 10, кв. 25">
+                    <label>&#1040;&#1076;&#1088;&#1077;&#1089; &#1086;&#1073;&#1098;&#1077;&#1082;&#1090;&#1072;</label>
+                    <input type="text" placeholder="&#1091;&#1083;. &#1055;&#1088;&#1080;&#1084;&#1077;&#1088;&#1085;&#1072;&#1103;, 10, &#1082;&#1074;. 25">
                 </div>
                 <div class="form-group">
-                    <label>Тип ремонта</label>
-                    <select><option>Косметический</option><option selected>Капитальный</option><option>Евроремонт</option></select>
+                    <label>&#1058;&#1080;&#1087; &#1088;&#1077;&#1084;&#1086;&#1085;&#1090;&#1072;</label>
+                    <select><option>&#1050;&#1086;&#1089;&#1084;&#1077;&#1090;&#1080;&#1095;&#1077;&#1089;&#1082;&#1080;&#1081;</option><option selected>&#1050;&#1072;&#1087;&#1080;&#1090;&#1072;&#1083;&#1100;&#1085;&#1099;&#1081;</option><option>&#1045;&#1074;&#1088;&#1086;&#1088;&#1077;&#1084;&#1086;&#1085;&#1090;</option></select>
                 </div>
                 <div class="form-group">
-                    <label>Комментарий</label>
-                    <textarea placeholder="Площадь 65 м², 2 комнаты, нужно сохранить паркет..."></textarea>
+                    <label>&#1050;&#1086;&#1084;&#1084;&#1077;&#1085;&#1090;&#1072;&#1088;&#1080;&#1081;</label>
+                    <textarea placeholder="&#1055;&#1083;&#1086;&#1097;&#1072;&#1076;&#1100; 65 &#1084;&#178;, 2 &#1082;&#1086;&#1084;&#1085;&#1072;&#1090;&#1099;, &#1085;&#1091;&#1078;&#1085;&#1086; &#1089;&#1086;&#1093;&#1088;&#1072;&#1085;&#1080;&#1090;&#1100; &#1087;&#1072;&#1088;&#1082;&#1077;&#1090;..."></textarea>
                 </div>
-                <button type="submit" class="btn btn-primary" style="width:100%;">Заказать бесплатный замер</button>
+                <button type="submit" class="btn btn-primary" style="width:100%;">&#1047;&#1072;&#1082;&#1072;&#1079;&#1072;&#1090;&#1100; &#1073;&#1077;&#1089;&#1087;&#1083;&#1072;&#1090;&#1085;&#1099;&#1081; &#1079;&#1072;&#1084;&#1077;&#1088;</button>
             </form>
         </div>
     </div>
@@ -388,30 +528,30 @@
     <div class="container">
         <div class="footer-grid">
             <div class="footer-brand">
-                <div class="logo" style="color:white;"><div class="logo-icon">🏠</div>РемСтрой</div>
-                <p>Ремонт квартир под ключ в Москве и области. Работаем с 2015 года. Более 800 сданных объектов.</p>
+                <div class="logo" style="color:white;"><div class="logo-icon">&#127968;</div>&#1056;&#1077;&#1084;&#1057;&#1090;&#1088;&#1086;&#1081;</div>
+                <p>&#1056;&#1077;&#1084;&#1086;&#1085;&#1090; &#1082;&#1074;&#1072;&#1088;&#1090;&#1080;&#1088; &#1087;&#1086;&#1076; &#1082;&#1083;&#1102;&#1095; &#1074; &#1052;&#1086;&#1089;&#1082;&#1074;&#1077; &#1080; &#1086;&#1073;&#1083;&#1072;&#1089;&#1090;&#1080;. &#1056;&#1072;&#1073;&#1086;&#1090;&#1072;&#1077;&#1084; &#1089; 2015 &#1075;&#1086;&#1076;&#1072;. &#1041;&#1086;&#1083;&#1077;&#1077; 800 &#1089;&#1076;&#1072;&#1085;&#1085;&#1099;&#1093; &#1086;&#1073;&#1098;&#1077;&#1082;&#1090;&#1086;&#1074;.</p>
             </div>
             <div class="footer-links">
-                <h4>Услуги</h4>
+                <h4>&#1059;&#1089;&#1083;&#1091;&#1075;&#1080;</h4>
                 <ul>
-                    <li><a href="#">Косметический ремонт</a></li>
-                    <li><a href="#">Капитальный ремонт</a></li>
-                    <li><a href="#">Евроремонт</a></li>
-                    <li><a href="#">Дизайн-проект</a></li>
+                    <li><a href="#">&#1050;&#1086;&#1089;&#1084;&#1077;&#1090;&#1080;&#1095;&#1077;&#1089;&#1082;&#1080;&#1081; &#1088;&#1077;&#1084;&#1086;&#1085;&#1090;</a></li>
+                    <li><a href="#">&#1050;&#1072;&#1087;&#1080;&#1090;&#1072;&#1083;&#1100;&#1085;&#1099;&#1081; &#1088;&#1077;&#1084;&#1086;&#1085;&#1090;</a></li>
+                    <li><a href="#">&#1045;&#1074;&#1088;&#1086;&#1088;&#1077;&#1084;&#1086;&#1085;&#1090;</a></li>
+                    <li><a href="#">&#1044;&#1080;&#1079;&#1072;&#1081;&#1085;-&#1087;&#1088;&#1086;&#1077;&#1082;&#1090;</a></li>
                 </ul>
             </div>
             <div class="footer-links">
-                <h4>Компания</h4>
+                <h4>&#1050;&#1086;&#1084;&#1087;&#1072;&#1085;&#1080;&#1103;</h4>
                 <ul>
-                    <li><a href="#">О нас</a></li>
-                    <li><a href="#">Портфолио</a></li>
-                    <li><a href="#">Отзывы</a></li>
-                    <li><a href="#">Контакты</a></li>
+                    <li><a href="#">&#1054; &#1085;&#1072;&#1089;</a></li>
+                    <li><a href="#">&#1055;&#1086;&#1088;&#1090;&#1092;&#1086;&#1083;&#1080;&#1086;</a></li>
+                    <li><a href="#">&#1054;&#1090;&#1079;&#1099;&#1074;&#1099;</a></li>
+                    <li><a href="#">&#1050;&#1086;&#1085;&#1090;&#1072;&#1082;&#1090;&#1099;</a></li>
                 </ul>
             </div>
         </div>
         <div class="footer-bottom">
-            © 2026 РемСтрой. Демо-лендинг. Создан для портфолио веб-разработчика.
+            &copy; 2026 &#1056;&#1077;&#1084;&#1057;&#1090;&#1088;&#1086;&#1081;. &#1044;&#1077;&#1084;&#1086;-&#1083;&#1077;&#1085;&#1076;&#1080;&#1085;&#1075;. &#1057;&#1086;&#1079;&#1076;&#1072;&#1085; &#1076;&#1083;&#1103; &#1087;&#1086;&#1088;&#1090;&#1092;&#1086;&#1083;&#1080;&#1086; &#1074;&#1077;&#1073;-&#1088;&#1072;&#1079;&#1088;&#1072;&#1073;&#1086;&#1090;&#1095;&#1080;&#1082;&#1072;.
         </div>
     </div>
 </footer>
@@ -422,9 +562,45 @@ function calculate() {
     const type = parseInt(document.getElementById('type').value) || 8500;
     const rooms = parseFloat(document.getElementById('rooms').value) || 1;
     const total = Math.round(area * type * rooms);
-    document.getElementById('result').textContent = total.toLocaleString('ru-RU') + ' ₽';
+    document.getElementById('result').textContent = total.toLocaleString('ru-RU') + ' &#8381;';
 }
 calculate();
+
+// Mobile menu toggle
+function toggleMenu() {
+    const nav = document.getElementById('navLinks');
+    const btn = document.querySelector('.menu-toggle');
+    nav.classList.toggle('open');
+    btn.classList.toggle('active');
+}
+function closeMenu() {
+    const nav = document.getElementById('navLinks');
+    const btn = document.querySelector('.menu-toggle');
+    nav.classList.remove('open');
+    btn.classList.remove('active');
+}
+
+// Close menu on outside click
+document.addEventListener('click', function(e) {
+    const nav = document.getElementById('navLinks');
+    const btn = document.querySelector('.menu-toggle');
+    if (!nav.contains(e.target) && !btn.contains(e.target)) {
+        nav.classList.remove('open');
+        btn.classList.remove('active');
+    }
+});
+
+// Intersection Observer for fade-in animations
+const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+        }
+    });
+}, observerOptions);
+
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 </script>
 
 </body>
